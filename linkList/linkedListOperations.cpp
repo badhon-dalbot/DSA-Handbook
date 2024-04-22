@@ -16,9 +16,10 @@ void insertAtBeginning(struct Node **head, int newData)
     *head = newNode;
 }
 
-void insertAfter(struct Node *prevNode, int newData){
-    if(prevNode == NULL)
-    return;
+void insertAfter(struct Node *prevNode, int newData)
+{
+    if (prevNode == NULL)
+        return;
 
     struct Node *newNode = new Node();
     newNode->data = newData;
@@ -52,7 +53,8 @@ void deleteNode(struct Node **headRef, int key)
 {
     struct Node *temp = *headRef, *prev;
 
-    if(temp != NULL && temp->data == key){
+    if (temp != NULL && temp->data == key)
+    {
         *headRef = temp->next;
         free(temp);
         return;
@@ -63,11 +65,24 @@ void deleteNode(struct Node **headRef, int key)
         temp = temp->next;
     }
 
-    if(temp == NULL) return;
+    if (temp == NULL)
+        return;
 
     prev->next = temp->next;
     free(temp);
-    
+}
+
+bool searchNode(struct Node **headRef, int key)
+{
+    struct Node *current = *headRef;
+
+    while (current != NULL)
+    {
+        if (current->data == key)
+            return true;
+        current = current->next;
+    }
+    return false;
 }
 
 void printLinkList(struct Node *head)
@@ -77,6 +92,7 @@ void printLinkList(struct Node *head)
         cout << head->data << " ";
         head = head->next;
     }
+    cout<<endl;
 }
 
 int main()
@@ -89,7 +105,8 @@ int main()
     insertAfter(head->next->next, 3);
     deleteNode(&head, 4);
 
-
     printLinkList(head);
+
+    searchNode(&head, 5) ? cout<<"Found"<<endl : cout<<"Not Found"<<endl;
     return 0;
 }
