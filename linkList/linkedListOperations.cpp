@@ -48,7 +48,27 @@ void insertAtEnd(struct Node **head, int newData)
     return;
 }
 
+void deleteNode(struct Node **headRef, int key)
+{
+    struct Node *temp = *headRef, *prev;
 
+    if(temp != NULL && temp->data == key){
+        *headRef = temp->next;
+        free(temp);
+        return;
+    }
+    while (temp != NULL && temp->data != key)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if(temp == NULL) return;
+
+    prev->next = temp->next;
+    free(temp);
+    
+}
 
 void printLinkList(struct Node *head)
 {
@@ -66,6 +86,9 @@ int main()
     insertAtBeginning(&head, 5);
     insertAtEnd(&head, 7);
     insertAfter(head->next->next, 8);
+    insertAfter(head->next->next, 3);
+    deleteNode(&head, 4);
+
 
     printLinkList(head);
     return 0;
