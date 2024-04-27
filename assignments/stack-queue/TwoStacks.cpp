@@ -108,6 +108,7 @@ int main()
     bool isEmpty2 = myStacks.isEmptyStack2();
 
     cout<<isEmpty1<<" "<<isEmpty2;
+    
 
     return 0;
 }
