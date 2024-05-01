@@ -15,6 +15,15 @@ struct Node *newNode(int x)
     return node;
 }
 
+struct Node *search(struct Node *root, int key){
+    if(root == NULL || root->value == key)
+    return root;
+
+    if(root->value < key){
+        return search(root->right, key);
+    }
+    return search(root->left, key);
+}
 int main()
 {
     struct Node *root = NULL;
@@ -25,6 +34,9 @@ int main()
     root->left->right = newNode(5);
     root->left->right->left = newNode(6);
     root->left->right->right = newNode(7);
+
+    (search(root, 8) != NULL) ? 
+    cout<<"Found": cout<<"Not Found";
 
     return 0;
 }
