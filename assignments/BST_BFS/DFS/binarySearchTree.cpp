@@ -85,7 +85,7 @@ struct Node *deleteNode(struct Node *root, int key)
         {
             Node *temp = successor(root->right);
             root->data = temp->data;
-            root->right = deleteNode(root->right, key);
+            root->right = deleteNode(root->right, temp->data);
         }
     }
     return root;
@@ -125,6 +125,13 @@ void printPostOrder(Node *root)
 
     cout << root->data << " ";
 }
+
+int height(Node *root){
+    if(root == NULL) return 0;
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+    return max(leftHeight, rightHeight) + 1;
+}
 int main()
 {
     struct Node *root = NULL;
@@ -135,17 +142,26 @@ int main()
     insert(root, 36);
     insert(root, 40);
     insert(root, 48);
-    insert(root, 51);
+    insert(root, 37);
+    insert(root, 38);
+    insert(root, 24);
 
     printInOrder(root);
     cout << endl;
+    cout<<height(root)<<endl;
     printPreOrder(root);
     cout << endl;
     printPostOrder(root);
     cout << endl;
-    deleteNode(root, 18);
+    deleteNode(root, 22);
+    deleteNode(root, 48);
+    deleteNode(root, 40);
     printInOrder(root);
+    cout<<endl;
 
     cout<< find(root,40);
+    Node * succ = successor(root);
+    cout<<endl;
+    cout<<height(root);
     return 0;
 }
