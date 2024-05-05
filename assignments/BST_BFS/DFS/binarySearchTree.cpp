@@ -46,16 +46,39 @@ struct Node *insert(struct Node *root, int key)
     return root;
 }
 
-void inorder(Node *root)
+void printInOrder(Node *root)
 {
     if (root == NULL)
         return;
 
-    inorder(root->left);
+    printInOrder(root->left);
 
     cout << root->data << " ";
 
-    inorder(root->right);
+    printInOrder(root->right);
+}
+
+void printPreOrder(Node *root)
+{
+    if (root == NULL)
+        return;
+    cout << root->data << " ";
+
+    printPreOrder(root->left);
+
+    printPreOrder(root->right);
+}
+
+void printPostOrder(Node *root)
+{
+    if (root == NULL)
+        return;
+
+    printPostOrder(root->left);
+
+    printPostOrder(root->right);
+
+    cout << root->data << " ";
 }
 int main()
 {
@@ -69,6 +92,10 @@ int main()
     insert(root, 48);
     insert(root, 51);
 
-    inorder(root);
+    printInOrder(root);
+    cout<<endl;
+    printPreOrder(root);
+    cout<<endl;
+    printPostOrder(root);
     return 0;
 }
