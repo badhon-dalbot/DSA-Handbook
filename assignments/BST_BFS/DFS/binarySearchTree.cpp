@@ -16,18 +16,6 @@ struct Node *newNode(int key)
     return node;
 }
 
-struct Node *find(struct Node *root, int key)
-{
-    if (root == NULL || root->data == key)
-        return root;
-
-    if (root->data < key)
-    {
-        return find(root->right, key);
-    }
-    return find(root->left, key);
-}
-
 struct Node *insert(struct Node *root, int key)
 {
     if (root == NULL)
@@ -45,15 +33,28 @@ struct Node *insert(struct Node *root, int key)
     return root;
 }
 
+bool find(struct Node *root, int key)
+{
+    if (root == NULL)
+        return false;
+    if (root->data == key)
+        return true;
+
+    if (root->data < key)
+    {
+       return find(root->right, key);
+    }
+   return find(root->left, key);
+}
+
 struct Node *successor(Node *root)
 {
-    Node * current = root;
+    Node *current = root;
     while (current && current->left != NULL)
     {
         current = current->left;
     }
     return current;
-    
 }
 
 struct Node *deleteNode(struct Node *root, int key)
@@ -141,8 +142,10 @@ int main()
     printPreOrder(root);
     cout << endl;
     printPostOrder(root);
-    cout<<endl;
+    cout << endl;
     deleteNode(root, 18);
     printInOrder(root);
+
+    cout<< find(root,40);
     return 0;
 }
