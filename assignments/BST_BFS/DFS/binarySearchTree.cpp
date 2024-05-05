@@ -28,7 +28,6 @@ struct Node *find(struct Node *root, int key)
     return find(root->left, key);
 }
 
-
 struct Node *insert(struct Node *root, int key)
 {
     if (root == NULL)
@@ -42,6 +41,51 @@ struct Node *insert(struct Node *root, int key)
     else
     {
         root->right = insert(root->right, key);
+    }
+    return root;
+}
+
+struct Node *successor(Node *root)
+{
+    Node * current = root;
+    while (current && current->left != NULL)
+    {
+        current = current->left;
+    }
+    return current;
+    
+}
+
+struct Node *deleteNode(struct Node *root, int key)
+{
+    if (key < root->data)
+    {
+        root->left = deleteNode(root->left, key);
+    }
+    else if (key > root->data)
+    {
+        root->right = deleteNode(root->right, key);
+    }
+    else
+    {
+        if (root->left == NULL)
+        {
+            Node *temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL)
+        {
+            Node *temp = root->left;
+            free(root);
+            return temp;
+        }
+        else
+        {
+            Node *temp = successor(root->right);
+            root->data = temp->data;
+            root->right = deleteNode(root->right, key);
+        }
     }
     return root;
 }
@@ -93,9 +137,12 @@ int main()
     insert(root, 51);
 
     printInOrder(root);
-    cout<<endl;
+    cout << endl;
     printPreOrder(root);
-    cout<<endl;
+    cout << endl;
     printPostOrder(root);
+    cout<<endl;
+    deleteNode(root, 18);
+    printInOrder(root);
     return 0;
 }
