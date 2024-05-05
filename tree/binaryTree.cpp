@@ -29,6 +29,7 @@ struct Node *insert(struct Node *root, int value)
     {
         root->right = insert(root->right, value);
     }
+    return root;
 }
 
 
