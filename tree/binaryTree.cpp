@@ -25,10 +25,35 @@ struct Node *insert(struct Node *root, int value)
     {
         root->left = insert(root->left, value);
     }
-    else if (root->value < value)
+    else
     {
         root->right = insert(root->right, value);
     }
+}
+
+
+
+void inorder(Node *root)
+{
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+
+    cout << root->value << " ";
+
+    inorder(root->right);
+}
+
+void preorder(Node *root)
+{
+    if (root == NULL)
+        return;
+    cout << root->value << " ";
+
+    preorder(root->left);
+
+    preorder(root->right);
 }
 
 struct Node *search(struct Node *root, int key)
@@ -45,15 +70,17 @@ struct Node *search(struct Node *root, int key)
 int main()
 {
     struct Node *root = NULL;
-    root = insert(root, 50);
+     root= insert(root, 50);
     insert(root, 30);
     insert(root, 20);
     insert(root, 40);
     insert(root, 70);
     insert(root, 60);
-    insert(root, 80);
+     insert(root, 80);
 
-    (search(root, 80) != NULL) ? cout << "Found" : cout << "Not Found";
+    inorder(root);
+    cout<<endl;
+    preorder(root);
 
     return 0;
 }
