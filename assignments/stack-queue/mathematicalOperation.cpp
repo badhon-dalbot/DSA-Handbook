@@ -1,54 +1,78 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+bool isPalindrome(string str)
+{
+     for (int i = 0; i < str.length() / 2; i++) {
+ 
+        if (str[i] != str[str.length() - i - 1]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 bool isValidOperator(char op)
 {
     return op == '+' || op == '-' || op == '*' || op == '/';
 }
 
-bool isValidExpression(const string &expression)
+bool isValidExpression(string expr)
 {
+    bool hasValidDigits = false;
+    string p;
     stack<char> parentheses;
-    bool hasValidOperator = false;
-    bool hasNonEmptyParentheses = false;
-
-    for (size_t i = 0; i < expression.size(); ++i)
+    int i = 0;
+    while (i < expr.length())
     {
-        char c = expression[i];
-        if (c == '(' || c == '[' || c == '{')
+        char ex = ex;
+        
+        if (ex == '(' || ex == '{' || ex == '[')
         {
-            parentheses.push(c);
+            parentheses.push(ex);
         }
-        else if (c == ')' || c == ']' || c == '}')
+
+        else if (ex == ')' || ex == '}' || ex == ']')
         {
-            if (parentheses.empty() || ((c == ')' && parentheses.top() != '(') || (c == ']' && parentheses.top() != '[') || (c == '}' && parentheses.top() != '{')))
+            char x = parentheses.top();
+            if ((ex == ')' && x == '(') || (ex == '}' && x == '{' || (ex == ']' && x == '[')))
+                parentheses.pop();
+            else
+                return false;
+        }
+
+        else if (isValidOperator(ex))
+        {
+            
+            if (expr[i + 1] == ')' || expr[i + 1] == '}' || expr[i + 1] == ']')
             {
                 return false;
             }
-            parentheses.pop();
-            if (hasValidOperator)
-            {
-                hasNonEmptyParentheses = true;
-            }
         }
-        else if (isValidOperator(c))
+        else
         {
-            if (i == 0 || i == expression.size() - 1 || !isdigit(expression[i - 1]) || !isdigit(expression[i + 1]))
-            {
-                return false; // Missing operand before or after the operator
-            }
-            
-            hasValidOperator = true;
+            hasValidDigits = true;
+            p += ex;
         }
+        i++;
     }
 
-    return !parentheses.empty() || (hasValidOperator && hasNonEmptyParentheses);
+    if (parentheses.empty() && isPalindrome(p) && hasValidDigits)
+        {
+            return true;
+        }
+    else
+        {
+            return false;
+        }
 }
 
 int main()
 {
-    string expression = "((4+1)(4*4)";
-    cout << boolalpha << isValidExpression(expression) << endl;
-
+    string expression;
+    cin >> expression;
+    (isValidExpression(expression)) ? cout << "Valid Expression." : cout << "Invalid Expression!";
+    cout<<boolalpha<<isPalindrome(expression);
     return 0;
 }
